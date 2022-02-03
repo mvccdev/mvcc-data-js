@@ -1,0 +1,20 @@
+{
+  "name": "mvcc-data",
+  "version": "1.0.0",
+  "description": "A small JavaScript library for data templating.",
+  "main": "mvcc-data.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "minify ./src/mvcc-data.js > ./dist/mvcc-data.js"
+  },
+  "keywords": [
+    "mvcc",
+    "JavaScript"
+  ],
+  "author": "Eric Harms",
+  "license": "MIT",
+  "devDependencies": {
+    "minify": "^8.0.3"
+  },
+  "dependencies": {}
+}

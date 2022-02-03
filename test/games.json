@@ -1,0 +1,12 @@
+[
+	{
+		"name": "Namco Museum Collection 1",
+		"stock": "5",
+		"price": "19.99"
+	},
+	{
+		"name": "Namco Museum Collection 2",
+		"stock": "10",
+		"price": "19.99"
+	}
+]
