@@ -16,7 +16,7 @@ const mvccURLParams = Object.fromEntries(new URLSearchParams(location.search).en
 // ============================================================================
 
 /**
- * Read data from JSON results.
+ * Reads data from JSON results.
  *
  * @example
  *

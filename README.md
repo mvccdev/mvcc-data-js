@@ -81,11 +81,11 @@ Renders a template from JSON results.
 		}
 	 );
 
- **mvccURLParams** 
+ **mvccURLParams**
 
  Returns the querystring in an object.
 
- 	mvccJsonTemplate("/some_api" + mvccUrlParams.id, {}, document.getElementById("output"),
+ 	mvccJsonTemplate("/some_api" + mvccURLParams.id, {}, document.getElementById("output"),
  		item => {
  			return `
  				<p>
