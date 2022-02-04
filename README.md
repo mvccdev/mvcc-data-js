@@ -81,7 +81,7 @@ Renders a template from JSON results.
 		}
 	 );
 
- **mvccURLParams**
+ **mvccURLParams** 
 
  Returns the querystring in an object.
 
