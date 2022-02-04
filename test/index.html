@@ -1,8 +1,14 @@
 <html>
 	<head>
-		<script src="./mvcc-data.js"></script>
+		<script src="./final.js"></script>
 	</head>
 	<body>
+		<h2>Json Reader</h2>
+		<p id="example1">
+		</p>
+
+		<h2>Object Template </h2>
+
 		<table>
 			<thead>
 				<tr>
@@ -12,31 +18,71 @@
 				</tr>
 			</thead>
 
-			<tbody id="root">
+			<tbody id="example2">
 			</tbody>
 		</table>
+		<h2>Json Template </h2>
 
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Stock</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+
+			<tbody id="example3">
+			</tbody>
+		</table>
 		<script>
-			mvccDataTemplate("games.json", document.getElementById("root"),
+			var people = [
+				{
+					"name": "Namco Collection 1",
+					"stock": "5",
+					"price": "19.95"
+				}
+			];
+
+			mvccObjectTemplate(people, document.getElementById("example2"),
 				item => {
 					return `
 						<tr>
-							<td>
-								${item.name}
-							</td>
-							<td>
-								${item.stock}
-							</td>
-							<td>
-								${item.price}
-							</td>
+							<td>${item.name}</td>
+							<td>${item.stock}</td>
+							<td>${item.price}</td>
 						</tr>
-					`
-				},
-				fail => {
-					console.log("The server returned status code: " + fail.status)
+					`;
 				}
 			);
+
+			mvccJsonTemplate("games.json", {}, document.getElementById("example3"),
+				item => {
+					return `
+						<tr>
+							<td>${item.name}</td>
+							<td>${item.stock}</td>
+							<td>${item.price}</td>
+						</tr>
+					`;
+				},
+				fail => {
+					console.log(fail);
+				}
+			);
+
+			/**
+			 * mvccDataTemplate
+			 */
+			mvccJsonReader("games.json", {},
+			 	items => {
+					document.getElementById("example1").innerHTML = items[0].name;
+				},
+				fail => {
+					console.log(fail);
+				}
+			);
+
 		</script>
 	</body>
 </html>

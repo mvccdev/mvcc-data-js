@@ -1,11 +1,11 @@
 {
   "name": "mvcc-data",
   "version": "1.0.0",
-  "description": "A small JavaScript library for data templating.",
+  "description": "A collection of JavaScript functions for templating.",
   "main": "mvcc-data.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "minify ./src/mvcc-data.js > ./dist/mvcc-data.js"
+    "build": "minify ./src/mvcc-data.js > ./dist/mvcc-data.min.js"
   },
   "keywords": [
     "mvcc",

@@ -1,6 +1,6 @@
 # mvcc-data-js
 
-A small JavaScript library to handle data templating.
+A collection of JavaScript functions for templating.
 
 ## Skill Prerequisites
 
@@ -28,15 +28,72 @@ Follow these steps to install this project.
 
 ## Examples
 
-	 mvccDataTemplate("/some_api?id=" mvccURLParams.id, document.getElementById("root"),
-		 item => {
-			 return `
+**mvccJsonReader**
+
+Reads data from JSON results.
+
+	mvccJsonReader("/some_api", {},
+		items => {
+			document.getElementById("output").innerHTML = items[0].name;
+		},
+		fail => {
+			console.log(fail);
+		}
+	);
+
+**mvccObjectTemplate**
+
+Renders a template from an object.
+
+	let data = [
+		{
+			"name": "Mickey Mouse"
+		},
+		{
+			"name": "Minnie Mouse"
+		},
+	];
+
+	mvccObjectTemplate(data, "output",
+		item => {
+			return `
 				<p>
 				 	${item.name}
 				</p>
 			`;
-		 },
-		 fail => {
-			 console.log("The server returned status code: " + fail.status)
 		 }
+	);
+
+**mvccJsonTemplate**
+
+Renders a template from JSON results.
+
+	mvccJsonTemplate("/some_api", {}, document.getElementById("output"),
+		item => {
+			return `
+				<p>
+				 	${item.name}
+				</p>
+			`;
+		},
+		fail => {
+			 console.log(fail);
+		}
 	 );
+
+ **mvccURLParams**
+
+ Returns the querystring in an object.
+
+ 	mvccJsonTemplate("/some_api" + mvccUrlParams.id, {}, document.getElementById("output"),
+ 		item => {
+ 			return `
+ 				<p>
+ 				 	${item.name}
+ 				</p>
+ 			`;
+ 		},
+ 		fail => {
+ 			 console.log(fail);
+ 		}
+ 	 );
