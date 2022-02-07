@@ -29,6 +29,50 @@ const mvccURLParams = Object.fromEntries(new URLSearchParams(location.search).en
  * );
  */
 function mvccJsonReader(url, opts, success_callback, failed_callback) {
+	fetch(url,  opts)
+		.then(resp => {
+			if(resp.status == 200) {
+				return resp.json();
+			}
+
+			throw Error(resp.status);
+		})
+		.then(json => {
+			return success_callback(json);
+		})
+		.catch(resp => {
+			failed_callback(resp);
+		});
+}
+
+
+// ============================================================================
+// #mvccJsonWriter
+// ============================================================================
+
+/**
+ * Send a JSON object to a web API.
+ *
+ * @example
+ *
+ * let data = {name: "Minnie Mouse"};
+ *
+ * mvccJsonWriter(url, {}, data,
+ *     success => {
+ *
+ *     },
+ *     failure => {
+ *     }
+ * );
+ */
+function mvccJsonWriter(url, opts, data, success_callback, failed_callback) {
+	opts = Object.assign({}, opts,
+		{
+			method: "post",
+			body: JSON.stringify(data)
+		}
+	);
+
 	fetch(url, opts)
 		.then(resp => {
 			if(resp.status == 200) {
@@ -53,6 +97,12 @@ function mvccJsonReader(url, opts, success_callback, failed_callback) {
  * Renders a template from an object.
  *
  * @example
+ *
+ * let data = [
+ *     {
+ *         name: "Mickie Mouse"
+ *     }
+ * ];
  *
  * mvccObjectTemplate(data, document.getElementById("output"),
  *     items => {

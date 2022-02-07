@@ -41,6 +41,20 @@ Reads data from JSON results.
 		}
 	);
 
+**mvccJsonWriter**
+
+Send a JSON object to a web API.
+
+	let data = {name: "Minnie Mouse"};
+
+	mvccJsonWriter(url, {}, data,
+		success => {
+
+		},
+		failure => {
+		}
+	);
+
 **mvccObjectTemplate**
 
 Renders a template from an object.
