@@ -20,7 +20,7 @@ const mvccURLParams = Object.fromEntries(new URLSearchParams(location.search).en
  *
  * @example
  *
- * mvccJsonReader(url, {},
+ * mvccDataReader(url, {},
  *     items => {
  *
  *     },
@@ -28,7 +28,7 @@ const mvccURLParams = Object.fromEntries(new URLSearchParams(location.search).en
  *     }
  * );
  */
-function mvccJsonReader(url, opts, success_callback, failed_callback) {
+function mvccDataReader(url, opts, success_callback, failed_callback) {
 	fetch(url,  opts)
 		.then(resp => {
 			if(resp.status == 200) {
@@ -57,7 +57,7 @@ function mvccJsonReader(url, opts, success_callback, failed_callback) {
  *
  * let data = {name: "Minnie Mouse"};
  *
- * mvccJsonWriter(url, {}, data,
+ * mvccDataWriter(url, {}, data,
  *     success => {
  *
  *     },
@@ -65,7 +65,7 @@ function mvccJsonReader(url, opts, success_callback, failed_callback) {
  *     }
  * );
  */
-function mvccJsonWriter(url, opts, data, success_callback, failed_callback) {
+function mvccDataWriter(url, opts, data, success_callback, failed_callback) {
 	opts = Object.assign({}, opts,
 		{
 			method: "post",
@@ -105,7 +105,7 @@ function mvccJsonWriter(url, opts, data, success_callback, failed_callback) {
  * ];
  *
  * mvccObjectTemplate(data, document.getElementById("output"),
- *     items => {
+ *     item => {
  *         return `
  *             <p>
  *                 ${item.name}
@@ -130,7 +130,7 @@ function mvccObjectTemplate(data, el, success_callback) {
  * @example
  *
  * mvccJsonTemplate(url, {}, document.getElementById("output"),
- *     items => {
+ *     item => {
  *         return `
  *             <p>
  *                 ${item.name}
@@ -142,11 +142,55 @@ function mvccObjectTemplate(data, el, success_callback) {
  * );
  */
 function mvccJsonTemplate(url, opts, el, success_callback, failed_callback) {
-	mvccJsonReader(url, opts,
+	mvccDataReader(url, opts,
 		items => {
 			mvccObjectTemplate(items, el,
 				item => {
 					return success_callback(item);
+				}
+			);
+		},
+		failed => {
+			failed_callback(failed);
+		}
+	);
+}
+
+// ============================================================================
+// #mvccJsonTemplateExt
+// ============================================================================
+
+/**
+ * Renders a template from JSON results with an callback for sorting or
+ * filtering.
+ *
+ * @example
+ *
+ * mvccJsonTemplate(url, {}, document.getElementById("output"),
+ *     items => {
+ *         return items.filter((item) => {
+ *             return item.name.startsWith("A");
+ *         });
+ *     }
+ *     item => {
+ *         return `
+ *             <p>
+ *                 ${item.name}
+ *             </p>
+ *         `;
+ *     },
+ *     fail => {
+ *     }
+ * );
+ */
+function mvccJsonTemplateExt(url, opts, el, success_callback, template_callback, failed_callback) {
+	mvccDataReader(url, opts,
+		items => {
+			items = success_callback(items) || items;
+
+			mvccObjectTemplate(items, el,
+				item => {
+					return template_callback(item);
 				}
 			);
 		},
