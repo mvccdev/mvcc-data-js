@@ -26,6 +26,22 @@ Follow these steps to install this project.
 	npm install
 	npm build
 
+## Building
+
+Use the following CL commands to test or compile this project:
+
+| Name          | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| npm run build | Build the project                                    |
+
 ## Documentation
 
 All documentation can be found on our [Canvas course](https://canvas.morainevalley.edu/enroll/JE48AC).
+
+## Contributing
+
+Pull requests are encouraged and welcome.
+
+## License
+
+MIT
