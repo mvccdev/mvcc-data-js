@@ -115,9 +115,21 @@ function mvccDataWriter(url, opts, data, success_callback, failed_callback) {
  * );
  */
 function mvccObjectTemplate(data, el, success_callback) {
-	el.innerHTML = data.map(item => {
-		return success_callback(item);
-	}).join("");
+ 	if(typeof data[Symbol.iterator] === 'function')
+	{
+		//
+		// For object collections
+		//
+		el.innerHTML = data.map(item => {
+			return success_callback(item);
+		}).join("");
+	}
+	else {
+		//
+		// For single objects.
+		//
+	 	el.innerHTML = success_callback(data);
+	}
 }
 
 // ============================================================================
