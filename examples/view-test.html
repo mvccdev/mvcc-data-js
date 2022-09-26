@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html>
+	<body>
+		<div id="root"></div>
+
+		<script src="../src/mvcc-data.js"></script>
+		<script>
+			let Child = `
+				Testing
+			`;
+let Example = new mvccDataView(document.getElementById("root"),
+	created => {
+  		document.getElementById("root").addEventListener("click", () => {
+  			Example.render({
+              name: "Moraine"
+            });
+        });
+
+		return {
+			name: "World"
+		}
+	},
+	template => {
+		return `
+			<p>${Child} Hello ${template.name}</p>
+		`
+	}
+);
+
+		</script>
+	</body>
+</html>

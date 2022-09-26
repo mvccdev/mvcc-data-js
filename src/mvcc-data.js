@@ -66,26 +66,30 @@ function mvccDataReader(url, opts, success_callback, failed_callback) {
  * );
  */
 function mvccDataWriter(url, opts, data, success_callback, failed_callback) {
+ 	//
+	// Build the options.
+	//
 	opts = Object.assign({}, opts,
 		{
-			method: "post",
-			body: JSON.stringify(data)
+			headers: {"Content-Type": "application/json"},
+			method: "POST",
+			body: JSON.stringify(data),
+			credentials: "include"
 		}
 	);
-
+	//
+	// Make the post request.
+	//
 	fetch(url, opts)
 		.then(resp => {
 			if(resp.status == 200) {
-				return resp.json();
+				return success_callback(resp); //was json
 			}
 
 			throw Error(resp.status);
 		})
-		.then(json => {
-			return success_callback(json);
-		})
 		.catch(resp => {
-			failed_callback(resp);
+			return failed_callback(resp) || "";
 		});
 }
 
@@ -163,7 +167,7 @@ function mvccJsonTemplate(url, opts, el, success_callback, failed_callback) {
 			);
 		},
 		failed => {
-			failed_callback(failed);
+			el.innerHTML = failed_callback(failed) || "";
 		}
 	);
 }
@@ -207,7 +211,60 @@ function mvccJsonTemplateExt(url, opts, el, success_callback, template_callback,
 			);
 		},
 		failed => {
-			failed_callback(failed);
+			el.innerHTML = failed_callback(failed) || "";
 		}
 	);
 }
+
+// ============================================================================
+// #mvccDataView
+// ============================================================================
+
+/**
+ * Creates a very basic view for data. Use mvcc-objects for anything advanced.
+ *
+ * @example
+ *
+ * let greeting = mvccDataView(document.getElementById("output"),
+ *     created => {
+ *         return {
+ *             name: "World"
+ *         }
+ *     },
+ *     template => {
+ *         return `
+ *             <p>Hello ${template.name}</p>
+ *         `;`
+ *     }
+ * );
+ *
+ * greeting.update({
+ *     name: "Moraine"
+ * });
+ */
+ function mvccDataView(el, created_callback, template_callback) {
+	 //
+	 // Renders the view inside the element.
+	 //
+	 this.render = function(new_data = {}) {
+	 	//
+		// Update the data with new values.
+		//
+ 		this.data = {...this.data, ...new_data};
+
+		//
+		// Render the view inside the element.
+		//
+		el.innerHTML = template_callback(this.data);
+	 }
+
+	 //
+	 // Invoke the created callback function.
+	 //
+	 this.data = created_callback() || {};
+
+	 //
+	 // Perform an initial render of the view.
+	 //
+	 this.render();
+ }

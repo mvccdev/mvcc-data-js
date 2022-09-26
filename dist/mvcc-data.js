@@ -1,1 +1,0 @@
-const mvccURLParams=Object.fromEntries(new URLSearchParams(location.search).entries());function mvccDataTemplate(t,e,n,a){fetch(t).then((t=>{if(200==t.status)return t.json();a&&a(t)})).then((t=>{e.innerHTML=t.map((t=>n(t))).join("")})).catch((t=>{a&&a(t)}))}
