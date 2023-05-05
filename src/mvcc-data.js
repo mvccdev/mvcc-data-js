@@ -89,7 +89,7 @@ function mvccDataWriter(url, opts, data, success_callback, failed_callback) {
 			throw Error(resp.status);
 		})
 		.catch(resp => {
-			return failed_callback(resp) || "";
+			failed_callback(resp) || "";
 		});
 }
 
@@ -215,56 +215,3 @@ function mvccJsonTemplateExt(url, opts, el, success_callback, template_callback,
 		}
 	);
 }
-
-// ============================================================================
-// #mvccDataView
-// ============================================================================
-
-/**
- * Creates a very basic view for data. Use mvcc-objects for anything advanced.
- *
- * @example
- *
- * let greeting = mvccDataView(document.getElementById("output"),
- *     created => {
- *         return {
- *             name: "World"
- *         }
- *     },
- *     template => {
- *         return `
- *             <p>Hello ${template.name}</p>
- *         `;`
- *     }
- * );
- *
- * greeting.update({
- *     name: "Moraine"
- * });
- */
- function mvccDataView(el, created_callback, template_callback) {
-	 //
-	 // Renders the view inside the element.
-	 //
-	 this.render = function(new_data = {}) {
-	 	//
-		// Update the data with new values.
-		//
- 		this.data = {...this.data, ...new_data};
-
-		//
-		// Render the view inside the element.
-		//
-		el.innerHTML = template_callback(this.data);
-	 }
-
-	 //
-	 // Invoke the created callback function.
-	 //
-	 this.data = created_callback() || {};
-
-	 //
-	 // Perform an initial render of the view.
-	 //
-	 this.render();
- }
