@@ -1,6 +1,6 @@
 # mvcc-data-js
 
-A collection of JavaScript functions for templating and data manipulation.
+A collection of JavaScript functions for generating HTML from JSON or a REST API.
 
 ## Skill Prerequisites
 
@@ -11,10 +11,9 @@ A basic understanding of the following skills are necessary to use this project.
 
 ## Tool Dependencies
 
-Install the following tools to use this project in your local development environment.
+Install the following tools to clone and rebuil this project in your local development environment.
 
 * [Node.js](https://nodejs.org/)
-* [Git](https://git-scm.com/)
 * [GitHub Desktop](https://desktop.github.com/)
 
 ## Installing
@@ -36,7 +35,12 @@ Use the following CL commands to test or compile this project:
 
 ## Documentation
 
-All documentation can be found on our [Canvas course](https://canvas.morainevalley.edu/enroll/JE48AC).
+* [mvccJSONTemplate](/docs/mvccJsonTemplate.md)
+* [mvccJSONTemplateExt](/docs/mvccJsonTemplateExt.md)
+* [mvccObjectTemplate](/docs/mvccObjectTemplate.md)
+* [mvccDataReader](/docs/mvccDataReader.md)
+* [mvccDataWriter](/docs/mvccDataWriter.md)
+* [mvccURLParams](/docs/mvccURLParams.md)
 
 ## Contributing
 
